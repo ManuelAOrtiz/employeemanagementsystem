@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-wrapper" style="text-align:center;">
+
+<form method="post" action="@Url.Action("Verify", "Users")">
+
+
+    @Html.AntiForgeryToken()
+    <div style="margin-top:5rem;">
+        <span style="font-size:3rem">
+            Username: 
+        </span>
+        <input type="text" name="username" />
+    </div>
+    <div style="margin-bottom: 2rem;">
+        <span style="font-size:3rem">
+            Password: </span>
+            <input type="password" name="password" />
+</div>
+    <div><input type="submit" value="Log-In" /></div>
+</form>
+</div>
+
+<div style="text-align:center; margin-bottom:5rem;">@Html.ActionLink("Create a new User", "Create", "Users")</div>
+

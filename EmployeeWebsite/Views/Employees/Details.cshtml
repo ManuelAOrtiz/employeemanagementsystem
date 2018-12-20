@@ -1,0 +1,126 @@
+﻿@model EmployeeWebsite.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payroll)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payroll)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.badge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.badge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.state)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.state)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zipcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zipcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vacationHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vacationHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonalTimeOff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonalTimeOff)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HourlyRates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourlyRates)
+        </dd>
+        @if (Session["permissionTier"].ToString().Contains("silver") && int.Parse(Session["id"].ToString()) == Model.Id)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Notes)
+            </dd>
+
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
