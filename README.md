@@ -30,7 +30,7 @@ This project is about learning ASP.NET and its MVC system.
   
   ![alt text](readme/seventh.png)
  9.) Run the project.
- 
+  ![alt text](readme/eight.png)
  All passwords are currently 123456.
  Users:
   1.)admin -
