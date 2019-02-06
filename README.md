@@ -6,7 +6,7 @@ This project is about learning ASP.NET and its MVC system.
 2.) Start Visual Studios.
 
 3.) Open EmployeeManagement.sln
-
+![alt text](readme/first.png)
 4.) Go to View menu on the top toolbar then select the Server Explorer on the dropdown menu.
 
 5.) Depending on the version of Visual Studio you are running what you need to do next may change.
