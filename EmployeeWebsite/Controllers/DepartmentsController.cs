@@ -18,6 +18,7 @@ namespace EmployeeWebsite.Controllers
         // GET: Departments
         public ActionResult Index()
         {
+            //making sure the user has permissions to view all the departments.
             if (Session["permissionTier"].ToString().Contains("silver"))
             {
                 return View(db.Departments.ToList());
@@ -57,6 +58,7 @@ namespace EmployeeWebsite.Controllers
         // GET: Departments/Create
         public ActionResult Create()
         {
+            //checking permissions of the user
             if (Session["permissionTier"] == null)
             {
                 return RedirectToAction("LogIn", "Users");

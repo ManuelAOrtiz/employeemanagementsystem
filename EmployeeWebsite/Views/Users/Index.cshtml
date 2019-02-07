@@ -10,6 +10,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+    @* checks user permissions level or if they are signed in to display the proper pages. *@
 @{ if(Session["username"] != null && Session["permissionTier"].ToString().Contains("silver"))
     {
 

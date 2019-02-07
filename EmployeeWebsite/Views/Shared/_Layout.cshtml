@@ -20,11 +20,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @*Below we want to check users permission level and if they are signed in or not. To make sure we direct them to the correct links.*@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (Session["username"] == null)
                     {
                         <li>@Html.ActionLink("Log In", "LogIn", "Users")</li>
                     }
+                    @*This line below is to enforce the "Employee"- tier users can view there own profile but doesn't have access to everything else. A better
+                        if statement will condense this code.*@
                     else if (Session["permissionTier"].ToString().Contains("bronze") && Session["permissionTier"].ToString().Contains("silver") == false)
                     {
                         

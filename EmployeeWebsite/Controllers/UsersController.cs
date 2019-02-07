@@ -18,6 +18,7 @@ namespace EmployeeWebsite.Controllers
     {
         private mdbcontext db = new mdbcontext();
         private static Random random = new Random();
+        //used to encrypted password. Remember to pass thru these values if trying to increase security of these values.
         private static int HashSize = 16;
         private static int SaltSize = 16;
 
@@ -107,47 +108,9 @@ namespace EmployeeWebsite.Controllers
     
     
 
-
-        //private byte[] CreateSalt()
-        //{
-        //    byte[] salt;
-        //    new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-        //    return salt;
-
-        //}
-
-        //private byte[] HashValue(string password, byte[] salt)
-        //{
-        //    var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-        //    byte[] hash = pbkdf2.GetBytes(20);
-        //    return hash;
-        //}
-        //private void Storage(byte[] salt, byte[] hash)
-        //{
-        //    byte[] hashBytes = new byte[36];
-        //    Array.Copy(salt, 0, hashBytes, 0, 16);
-        //    Array.Copy(hash, 0, hashBytes, 16, 20);
-        //}
-        //private void VerifyPassword()
-        //{
-        //    /* Fetch the stored value */
-        //    string savedPasswordHash = DBContext.GetUser(u => u.UserName == user).Password;
-        //    /* Extract the bytes */
-        //    byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
-        //    /* Get the salt */
-        //    byte[] salt = new byte[16];
-        //    Array.Copy(hashBytes, 0, salt, 0, 16);
-        //    /* Compute the hash on the password the user entered */
-        //    var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-        //    byte[] hash = pbkdf2.GetBytes(20);
-        //    /* Compare the results */
-        //    for (int i = 0; i < 20; i++)
-        //        if (hashBytes[i + 16] != hash[i])
-        //            throw new UnauthorizedAccessException();
-        //}
-
         private void CheckForAdmin()
         {
+            //auto generates an admin if none are present.
             List<User> list = db.Users.Where(x => x.permissionTier == "guest,bronze,silver,gold").ToList();
             if(list.Count == 0)
             {
@@ -377,6 +340,7 @@ namespace EmployeeWebsite.Controllers
         }
         public ActionResult CreateRandomUser()
         {
+            //when generating a new employee. They must call this function to get a user.
             if (Session["permissionTier"].ToString() == "silver" || Session["permissionTier"].ToString() == "gold")
             {
                 User user = new User();

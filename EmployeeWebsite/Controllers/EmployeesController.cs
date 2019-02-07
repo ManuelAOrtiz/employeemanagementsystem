@@ -15,6 +15,8 @@ namespace EmployeeWebsite.Controllers
 {
     public class EmployeesController : Controller
     {
+        //mdbcontext is needed to manipulate the model to customize our edit sheets as we want HR-tier users to edit more info on a user and we want
+        //employee tier users to edit a very few data fields.
         private mdbcontext db = new mdbcontext();
         private static Random random = new Random();
 
@@ -22,7 +24,7 @@ namespace EmployeeWebsite.Controllers
         public ActionResult Index()
         {
             var employees = db.Employees.Include(e => e.Department).Include(e => e.User);
-
+            //checking users permission, non- silver aka "HR"-tier view their personal page instead
             if (Session["permissionTier"].ToString().Contains("silver"))
             {
                 return View(employees.ToList());
@@ -31,6 +33,7 @@ namespace EmployeeWebsite.Controllers
             {
                 User user = db.Users.Find(int.Parse(Session["id"].ToString()));
                 Employee e = user.Employees.First();
+                //redirecting the user back to their "profile" page
                 return RedirectToAction("Details", new RouteValueDictionary(
          new { controller = "Employees", action = "Details", e.Id }));
             }
@@ -71,6 +74,8 @@ namespace EmployeeWebsite.Controllers
             }
             else if (Session["permissionTier"].ToString().Contains("silver"))
             {
+                //to force all employees to have an user name attached to it while making it simple to use we needed to list out available users that may
+                //have been created by employee prospects OR allow a randomly generated username that the employee can edit on his own.
                 ViewBag.departmentId = new SelectList(db.Departments, "Id", "name");
                 SelectList sl = new SelectList(db.Users, "Id", "username");
                 SelectListItem sli = new SelectListItem();
@@ -86,6 +91,7 @@ namespace EmployeeWebsite.Controllers
         }
         public SelectList AddFirstItem(SelectList origList, SelectListItem firstItem)
         {
+            //this code organizes and lists all the available users. This ensures that the create random user is on top of the list.
             List<SelectListItem> newList = origList.ToList();
             newList.Insert(0, firstItem);
             List<SelectListItem> removeItems = new List<SelectListItem>();
@@ -97,6 +103,7 @@ namespace EmployeeWebsite.Controllers
                     if (user.Employees.Count != 0)
                     {
                         removeItems.Add(sli);
+                    //removes the admin account as being attached to anything else.
                     }else if(user.username == "admin")
                     {
                         removeItems.Add(sli);
@@ -128,11 +135,13 @@ namespace EmployeeWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                //If a new user is required to generate it we create one as requested.
                 if(Request["userId"] == "0" && Session["permissionTier"].ToString().Contains("silver"))
                 {
                     User user = new User();
                     user.username = employee.name + "#" + RandomString(4);
                     user.password = "123456";
+                    //here we can have predefined department permissions if we wanted to expanded or reduce the a departments capabilities on the website.
                     if(employee.Department.name == "HR")
                     {
                         user.permissionTier = "guest,bronze,silver";
@@ -196,6 +205,7 @@ namespace EmployeeWebsite.Controllers
             {
                 if (sli.Value != "0")
                 {
+                    //if the user is has an employee attached to the account we want to do nothing. however if it isn't we can attach a user account to it.
                     User user = db.Users.Find(int.Parse(sli.Value));
                     if (user.Employees.Contains(employee))
                     {
@@ -280,6 +290,8 @@ namespace EmployeeWebsite.Controllers
                 //{
 
                     //db.Entry(employee).State = EntityState.Modified;
+                    
+                //since we modified the edit form we have to change the way we update the entity with this line of code instead.
                     db.Set<Employee>().AddOrUpdate(employee);
                     db.SaveChanges();
                 
